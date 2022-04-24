@@ -42,66 +42,72 @@
     <q-list separator>
       <q-item-label header>Alliance</q-item-label>
 
-      <q-item
-        v-for="message in messages"
-        :key="message.date"
-        class="q-py-sm"
-        clickable
-        v-ripple
+      <transition-group
+        appear
+        enter-active-class="animated fadeIn slow"
+        leave-active-class="animated fadeOut slow"
       >
-        <q-item-section avatar top>
-          <q-avatar>
-            <img src="Fulcrum.png">
-          </q-avatar>
-        </q-item-section>
+        <q-item
+          v-for="message in messages"
+          :key="message.date"
+          class="alliance-message q-py-sm"
+          clickable
+          v-ripple
+        >
+          <q-item-section avatar top>
+            <q-avatar>
+              <img src="Fulcrum.png">
+            </q-avatar>
+          </q-item-section>
 
-        <q-item-section>
-          <q-item-label class="text-subtitle1">
-            <strong>Fulcrum</strong>
-            <span class="text-grey-7">
-              @fulcrum_tano
-            </span>
-          </q-item-label>
-          <q-item-label class="alliance-content text-body1">
-            {{ message.content }}
-          </q-item-label>
-          <div class="alliance-icon row justify-between q-mt-sm">
-            <q-btn
-              color="grey"
-              size="sm"
-              icon="far fa-comment"
-              flat
-              round
-            />
-            <q-btn
-              color="grey"
-              size="sm"
-              icon="fas fa-retweet"
-              flat
-              round
-            />
-            <q-btn
-              color="grey"
-              size="sm"
-              icon="far fa-heart"
-              flat
-              round
-            />
-            <q-btn
-              @click="deleteMessage(message)"
-              color="grey"
-              size="sm"
-              icon="fas fa-trash"
-              flat
-              round
-            />
-          </div>
-        </q-item-section>
+          <q-item-section>
+            <q-item-label class="text-subtitle1">
+              <strong>Fulcrum</strong>
+              <span class="text-grey-7">
+                @fulcrum_tano
+              </span>
+            </q-item-label>
+            <q-item-label class="alliance-content text-body1">
+              {{ message.content }}
+            </q-item-label>
+            <div class="alliance-icon row justify-between q-mt-sm">
+              <q-btn
+                color="grey"
+                size="sm"
+                icon="far fa-comment"
+                flat
+                round
+              />
+              <q-btn
+                color="grey"
+                size="sm"
+                icon="fas fa-retweet"
+                flat
+                round
+              />
+              <q-btn
+                color="grey"
+                size="sm"
+                icon="far fa-heart"
+                flat
+                round
+              />
+              <q-btn
+                @click="deleteMessage(message)"
+                color="grey"
+                size="sm"
+                icon="fas fa-trash"
+                flat
+                round
+              />
+            </div>
+          </q-item-section>
 
-        <q-item-section side top>
-          {{ relativeDate(message.date) }}
-        </q-item-section>
-      </q-item>
+          <q-item-section side top>
+            {{ relativeDate(message.date) }}
+          </q-item-section>
+        </q-item>
+      </transition-group>
     </q-list>
   </q-page>
 </template>
@@ -136,7 +142,8 @@ export default defineComponent({
         content: this.newAllianceContent,
         date: Date.now()
       }
-      this.messages.unshift(newMessage)
+      this.messages.unshift(newMessage) // Add to array by early to later
+      this.newAllianceContent = ''  // Reset new message placeholder
     },
     deleteMessage(message) {
       let dateToDelete = message.date
@@ -160,4 +167,6 @@ export default defineComponent({
   white-space: pre-line
 .alliance-icon
   margin-left: -5px
+.alliance-message:not(:first-child)
+  border-top: 1px solid rgba(0, 0, 0, 0.12)
 </style>
