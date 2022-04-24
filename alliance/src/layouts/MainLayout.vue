@@ -80,7 +80,7 @@
         <q-item class="q-pa-md">
           <q-item-section>
             <q-item-label overline class="text-grey">Alert</q-item-label>
-            <q-item-labe class="text-weight-bold">Jedi Children Massacre</q-item-labe>
+            <q-item-labe class="text-weight-bold">Younglings Massacre at Jedi Temple</q-item-labe>
             <q-item-label caption>Anakin Skywalker murdered all the children at Jedi temple.</q-item-label>
           </q-item-section>
 
