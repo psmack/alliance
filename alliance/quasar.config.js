@@ -10,6 +10,8 @@
 
 
 const { configure } = require('quasar/wrappers');
+// Note: Commented below line because it was breaking 'quasar dev' command
+// const { default: firebase } = require('src/boot/firebase');
 
 module.exports = configure(function (ctx) {
   return {
@@ -23,8 +25,7 @@ module.exports = configure(function (ctx) {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
     boot: [
-      
-      
+      'firebase'
     ],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
