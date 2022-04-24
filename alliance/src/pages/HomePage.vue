@@ -21,6 +21,7 @@
       </div>
       <div class="col col-shrink">
         <q-btn
+          @click="addNewMessage"
           :disable="!newAllianceContent"
           label="Send"
           class="q-mb-lg"
@@ -38,10 +39,12 @@
       color="grey-2"
     />
 
-    <q-list>
+    <q-list separator>
       <q-item-label header>Alliance</q-item-label>
 
       <q-item
+        v-for="message in messages"
+        :key="message.date"
         class="q-py-sm"
         clickable
         v-ripple
@@ -60,7 +63,7 @@
             </span>
           </q-item-label>
           <q-item-label class="alliance-content text-body1">
-            Hello World
+            {{ message.content }}
           </q-item-label>
           <div class="alliance-icon row justify-between q-mt-sm">
             <q-btn
@@ -85,6 +88,7 @@
               round
             />
             <q-btn
+              @click="deleteMessage(message)"
               color="grey"
               size="sm"
               icon="fas fa-trash"
@@ -95,7 +99,7 @@
         </q-item-section>
 
         <q-item-section side top>
-          1 min ago
+          {{ relativeDate(message.date) }}
         </q-item-section>
       </q-item>
     </q-list>
@@ -104,12 +108,40 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { formatDistance } from 'date-fns'
 
 export default defineComponent({
   name: 'HomePage',
   data() {
     return {
-      newAllianceContent: ''
+      newAllianceContent: '',
+      messages: [
+        {
+          content: 'From error to error one discovers the entire truth. - Sigmund Freud',
+          date: 1650833361612
+        },
+        {
+          content: 'The greatest danger for most of us is not that our aim is too high and we miss it, but that it is too low and we reach it. - Michelangelo',
+          date: 1650833207328
+        }
+      ]
+    }
+  },
+  methods: {
+    relativeDate(value) {
+      return formatDistance(value, new Date())
+    },
+    addNewMessage() {
+      let newMessage = {
+        content: this.newAllianceContent,
+        date: Date.now()
+      }
+      this.messages.unshift(newMessage)
+    },
+    deleteMessage(message) {
+      let dateToDelete = message.date
+      let index = this.messages.findIndex(message => message.date === dateToDelete)
+      this.messages.splice(index, 1)
     }
   }
 })
