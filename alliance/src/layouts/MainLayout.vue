@@ -3,16 +3,20 @@
 
     <q-header
       bordered
-      class="bg-primary text-white"
+      class="bg-white text-black"
     >
+      <!-- class="bg-primary text-white" -->
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title class="text-weight-bold">
-          <!-- <q-avatar>
-            <img src="alliance\public\icons\Fulcrum.png">
-          </q-avatar> -->
-          <span>{{ $route.name}}</span>
+          <span class="gt-sm">{{ $route.name}}</span>
+          <q-avatar
+            class="header-icon q-ma-md lt-md"
+            size="md"
+          >
+            <img src="alliance.png">
+          </q-avatar>
         </q-toolbar-title>
 
       </q-toolbar>
@@ -142,3 +146,12 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+.header-icon
+  position: absolute
+  top: -15%
+  bottom: 0
+  left: 50%
+  transform: translateX(-50%)
+</style>
