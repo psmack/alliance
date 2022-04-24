@@ -3,7 +3,6 @@
 
     <q-header
       bordered
-      
       class="bg-primary text-white"
     >
       <q-toolbar>
@@ -27,13 +26,12 @@
       bordered
     >
       <!-- Left drawer content -->
-      <q-icon 
-        class="q-pa-md"
-        name="radar"
-        size="lg"
-        color="primary"
-      />
-
+      <q-avatar
+        class="q-ma-md"
+        size="md"
+      >
+        <img src="alliance.png">
+      </q-avatar>
       <!-- <font-awesome-icon icon="fa-solid fa-solar-system" name="fas fa-dove"/> -->
       <q-list>
         <q-item
@@ -81,9 +79,20 @@
       >
         <q-item class="q-pa-md">
           <q-item-section>
-            <q-item-label overline class="text-grey">Alerts</q-item-label>
-            <q-item-labe class="text-weight-bold">Order 66</q-item-labe>
-            <q-item-label caption>Supreme Chancellor Sheev Palpatine executed Order 66 forcing the clones to view the Jedi as a dangerous threat that needs to be eliminated at all costs.</q-item-label>
+            <q-item-label overline class="text-grey">Alert</q-item-label>
+            <q-item-labe class="text-weight-bold">Jedi Children Massacre</q-item-labe>
+            <q-item-label caption>Anakin Skywalker murdered all the children at Jedi temple.</q-item-label>
+          </q-item-section>
+
+          <q-item-section side top>
+            <q-item-label caption>4 min ago</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item class="q-pa-md">
+          <q-item-section>
+            <q-item-label overline class="text-grey">Alert</q-item-label>
+            <q-item-labe class="text-weight-bold">Jedi Temple Fallen</q-item-labe>
+            <q-item-label caption>Temple is under attacked by Sith and Clones.</q-item-label>
           </q-item-section>
 
           <q-item-section side top>
@@ -92,18 +101,7 @@
         </q-item>
         <q-item class="q-pa-md">
           <q-item-section>
-            <q-item-label overline class="text-grey">Alerts</q-item-label>
-            <q-item-labe class="text-weight-bold">Order 66</q-item-labe>
-            <q-item-label caption>Supreme Chancellor Sheev Palpatine executed Order 66 forcing the clones to view the Jedi as a dangerous threat that needs to be eliminated at all costs.</q-item-label>
-          </q-item-section>
-
-          <q-item-section side top>
-            <q-item-label caption>5 min ago</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item class="q-pa-md">
-          <q-item-section>
-            <q-item-label overline class="text-grey">Alerts</q-item-label>
+            <q-item-label overline class="text-grey">Alert</q-item-label>
             <q-item-labe class="text-weight-bold">Order 66</q-item-labe>
             <q-item-label caption>Supreme Chancellor Sheev Palpatine executed Order 66 forcing the clones to view the Jedi as a dangerous threat that needs to be eliminated at all costs.</q-item-label>
           </q-item-section>
