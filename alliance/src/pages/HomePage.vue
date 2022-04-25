@@ -23,7 +23,6 @@
         <div class="col col-shrink">
           <q-btn
             @click="addNewMessage"
-            :disable="!newAllianceContent"
             label="Send"
             class="q-mb-lg"
             color="primary"
@@ -31,6 +30,7 @@
             rounded
             no-caps
           />
+            <!-- :disable="!newAllianceContent" -->
         </div>
       </div>
 
@@ -50,7 +50,7 @@
         >
           <q-item
             v-for="message in messages"
-            :key="message.date"
+            :key="message.id"
             class="alliance-message q-py-sm"
             clickable
             v-ripple
@@ -112,6 +112,8 @@
 </template>
 
 <script>
+import db from 'src/boot/firebase'
+import { collection, query, orderBy, addDoc, deleteDoc, doc, onSnapshot } from "firebase/firestore"
 import { defineComponent } from 'vue'
 import { formatDistance } from 'date-fns'
 
@@ -121,26 +123,14 @@ export default defineComponent({
     return {
       newAllianceContent: '',
       messages: [
-        {
-          content: 'Every problem has a gift for you in its hands. - Richard Bach',
-          date: 1650836213298
-        },
-        {
-          content: 'I will not be concerned at other men is not knowing me;I will be concerned at my own want of ability. - - Confucius',
-          date: 1650836198704
-        },
-        {
-          content: 'Few things can help an individual more than to place responsibility on him, and to let him know that you trust him. - Booker T. Washington',
-          date: 1650836187349
-        },
-        {
-          content: 'From error to error one discovers the entire truth. - Sigmund Freud',
-          date: 1650833361612
-        },
-        {
-          content: 'The greatest danger for most of us is not that our aim is too high and we miss it, but that it is too low and we reach it. - Michelangelo',
-          date: 1650833207328
-        }
+        // {
+        //   content: 'Every problem has a gift for you in its hands. - Richard Bach',
+        //   date: 1650836213298
+        // },
+        // {
+        //   content: 'I will not be concerned at other men is not knowing me;I will be concerned at my own want of ability. - - Confucius',
+        //   date: 1650836198704
+        // }
       ]
     }
   },
@@ -153,14 +143,52 @@ export default defineComponent({
         content: this.newAllianceContent,
         date: Date.now()
       }
-      this.messages.unshift(newMessage) // Add to array by early to later
-      this.newAllianceContent = ''  // Reset new message placeholder
+      // Add to array by early to later
+      // this.messages.unshift(newMessage)
+
+      // Add to firebase
+      try {
+        const docRef = addDoc(collection(db, "messages"), newMessage)
+        console.log("Document written with ID: ", docRef.id)
+      } catch (e) {
+        console.error("Error adding document: ", e)
+      }
+      // Reset new message placeholder
+      this.newAllianceContent = ''
     },
     deleteMessage(message) {
-      let dateToDelete = message.date
-      let index = this.messages.findIndex(message => message.date === dateToDelete)
-      this.messages.splice(index, 1)
+      // let idToDelete = message.id
+      // let index = this.messages.findIndex(message => message.id === idToDelete)
+      // this.messages.splice(index, 1)
+      try {
+        deleteDoc(doc(db, 'messages', message.id))
+        console.log("Document successfully deleted!")
+      } catch (e) {
+        console.error("Error removing document: ", e)
+      }
     }
+  },
+  mounted() {
+    let messageData = collection(db, 'messages')
+    let q = query(messageData, orderBy('date'))
+    let updateMessages = onSnapshot(q, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        let messageChange = change.doc.data()
+        messageChange.id = change.doc.id
+        if (change.type === 'added') {
+          console.log('New message: ', messageChange)
+          this.messages.unshift(messageChange)
+        }
+        if (change.type === 'modified') {
+          console.log('Modified message: ', messageChange)
+        }
+        if (change.type === 'removed') {
+          console.log('Removed message: ', messageChange)
+          let index = this.messages.findIndex(message => message.id === messageChange.id)
+          this.messages.splice(index, 1)
+        }
+      })
+    })
   }
 })
 </script>
