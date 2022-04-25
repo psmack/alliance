@@ -45,7 +45,7 @@
           exact
         >
           <q-item-section avatar>
-            <q-icon color="primary" name="home" size="md"/>
+            <q-icon name="home" size="md"/>
           </q-item-section>
           <q-item-section class="text-h6 text-weight-bold">Home</q-item-section>
         </q-item>
@@ -56,7 +56,7 @@
           exact
         >
           <q-item-section avatar>
-            <q-icon color="primary" name="help" size="md"/>
+            <q-icon name="help" size="md"/>
           </q-item-section>
           <q-item-section class="text-h6 text-weight-bold">About</q-item-section>
         </q-item>
@@ -111,14 +111,16 @@
           </q-item-section>
 
           <q-item-section side top>
-            <q-item-label caption>5 min ago</q-item-label>
+            <q-item-label caption>11 min ago</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <keep-alive>
+        <router-view />
+      </keep-alive>
     </q-page-container>
 
   </q-layout>
