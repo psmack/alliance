@@ -2,7 +2,8 @@
   <q-page class="q-pa-lg">
     <h4 class="q-mt-none q-mb-md text-weight-bold">About Alliance</h4>
     <div class="text-body1">
-      <p>Body 1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.
+      <p>
+        We believe real change starts with conversation. Here, your voice matters. Come as you are and together we’ll do what’s right (not what’s easy) to restore the Republic.
       </p>
     </div>
   </q-page>
