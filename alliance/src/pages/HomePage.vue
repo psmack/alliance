@@ -88,9 +88,10 @@
                   round
                 />
                 <q-btn
-                  color="grey"
+                  @click="toggleLiked(message)"
+                  :color="message.liked ? 'pink' : 'grey'"
+                  :icon="message.liked ? 'fas fa-heart' : 'far fa-heart'"
                   size="sm"
-                  icon="far fa-heart"
                   flat
                   round
                 />
@@ -113,7 +114,7 @@
 
 <script>
 import db from 'src/boot/firebase'
-import { collection, query, orderBy, addDoc, deleteDoc, doc, onSnapshot } from "firebase/firestore"
+import { query, doc, collection, orderBy, onSnapshot, addDoc, deleteDoc, updateDoc } from "firebase/firestore"
 import { defineComponent } from 'vue'
 import { formatDistance } from 'date-fns'
 
@@ -124,12 +125,16 @@ export default defineComponent({
       newAllianceContent: '',
       messages: [
         // {
+        //   id: 'ID1',
         //   content: 'Every problem has a gift for you in its hands. - Richard Bach',
-        //   date: 1650836213298
+        //   date: 1650836213298,
+        //   liked: false
         // },
         // {
+        //   id: 'ID2',
         //   content: 'I will not be concerned at other men is not knowing me;I will be concerned at my own want of ability. - - Confucius',
-        //   date: 1650836198704
+        //   date: 1650836198704,
+        //   liked: true
         // }
       ]
     }
@@ -141,7 +146,8 @@ export default defineComponent({
     addNewMessage() {
       let newMessage = {
         content: this.newAllianceContent,
-        date: Date.now()
+        date: Date.now(),
+        liked: false
       }
       // Add to array by early to later
       // this.messages.unshift(newMessage)
@@ -166,6 +172,18 @@ export default defineComponent({
       } catch (e) {
         console.error("Error removing document: ", e)
       }
+    },
+    toggleLiked(message) {
+      try {
+        const updateLiked = doc(db, "messages", message.id)
+        updateDoc(updateLiked, {
+          liked: !message.liked
+        })
+        console.log('toggleLiked')
+      console.log(message)
+      } catch (e) {
+        console.error("Error updating document: ", e)
+      }
     }
   },
   mounted() {
@@ -181,6 +199,8 @@ export default defineComponent({
         }
         if (change.type === 'modified') {
           console.log('Modified message: ', messageChange)
+          let index = this.messages.findIndex(message => message.id === messageChange.id)
+          Object.assign(this.messages[index], messageChange)
         }
         if (change.type === 'removed') {
           console.log('Removed message: ', messageChange)
